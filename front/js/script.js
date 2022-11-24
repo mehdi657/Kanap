@@ -1,4 +1,7 @@
+// ***utilisations dela méthode "fetch" pour récupérer les données du server***
 fetch("http://localhost:3000/api/products")
+
+  // **************************utilisations des promese************************
   .then((res) => {
     if (res.ok) {
       return res.json();
@@ -6,25 +9,29 @@ fetch("http://localhost:3000/api/products")
   })
   .then((value) => {
     console.log(value);
+
+    // ***************utilisation d'une boucle pour chaque produit**************
     for (let cur of value) {
       console.log(cur);
+
+      // **********************créations des éléments HTML**********************
       const conteneurA = document.createElement("a");
-      const id = cur._id;
-      conteneurA.setAttribute("href",`./product.html?id=${id}`);
-      console.log(conteneurA);
       const conteneurArticle = document.createElement("article");
       const conteneurImage = document.createElement("img");
-      conteneurImage.setAttribute("src",cur.imageUrl);
-      conteneurImage.setAttribute("alt",cur.altTxt);
-      console.log(conteneurImage);
       const conteneurName = document.createElement("h3");
-      conteneurName.classList.add("productName")
-      conteneurName.textContent = cur.name;
-      console.log(conteneurName);
       const conteneurDescription = document.createElement("p");
-      conteneurDescription.classList.add("productDescription")
+
+      // ****************injection du contenue dans les éléments****************
+      const id = cur._id;
+      conteneurA.setAttribute("href", `./product.html?id=${id}`);
+      conteneurImage.setAttribute("src", cur.imageUrl);
+      conteneurImage.setAttribute("alt", cur.altTxt);
+      conteneurName.classList.add("productName");
+      conteneurDescription.classList.add("productDescription");
       conteneurDescription.textContent = cur.description;
-      console.log(conteneurDescription);
+      conteneurName.textContent = cur.name;
+
+      // ******************injection des éléments dans le HTML******************
       items.appendChild(conteneurA);
       conteneurA.appendChild(conteneurArticle);
       conteneurArticle.appendChild(conteneurImage);
@@ -35,6 +42,3 @@ fetch("http://localhost:3000/api/products")
   .catch((err) => {
     // Une erreur est survenue
   });
-
-let els = document.getElementById("items");
-console.log(els);
