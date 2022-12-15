@@ -109,7 +109,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
           } else {
             // ******************************actions d'envoi******************************
             addOrder(produit);
-            popupConfirmation();
+            // popupConfirmation();
           }
         });
       });

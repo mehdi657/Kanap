@@ -212,6 +212,7 @@ let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 // *********utilisation d'un écouteur d'evenement sur le bouton de commande********
 myForm.addEventListener("click", function (e) {
+  e.preventDefault();
   // ******************déclarations des fonctions********************
   // ***********************message d'erreur*************************
   function myError1(myError, message, e) {
@@ -232,10 +233,62 @@ myForm.addEventListener("click", function (e) {
     }
   }
 
-  // ******************appel des fonctions********************
-  testForm(nameRegex, inputFName, errorFName, message1);
-  testForm(nameRegex, inputLName, errorLName, message1);
-  testForm(addressRegex, inputAddress, errorAddress, message2);
-  testForm(nameRegex, inputCity, errorCity, message3);
-  testForm(emailRegex, inputEmail, errorEmail, message4);
+  // // ******************appel des fonctions********************
+  // testForm(nameRegex, inputFName, errorFName, message1);
+  // testForm(nameRegex, inputLName, errorLName, message1);
+  // testForm(addressRegex, inputAddress, errorAddress, message2);
+  // testForm(nameRegex, inputCity, errorCity, message3);
+  // testForm(emailRegex, inputEmail, errorEmail, message4);
+
+  // ******************collect des coordonnees********************
+  let contact = {
+    firstName: `${inputFName.value}`,
+    lastName: `${inputLName.value}`,
+    address: `${inputAddress.value}`,
+    city: `${inputCity.value}`,
+    email: `${inputEmail.value}`,
+  };
+  let products = [];
+  for (let i = 0; i < order.length; i++) {
+    products.push(order[i].idProduit);
+  }
+  let commande = { contact, products };
+  // console.log(commande);
+
+  // *****utilisation de la mothode post pour envoyer les infos au backend*****
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    body: JSON.stringify(commande),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      res
+        .json()
+
+        .then((value) => {
+          // ******************appel des fonctions********************
+          testForm(nameRegex, inputFName, errorFName, message1);
+          testForm(nameRegex, inputLName, errorLName, message1);
+          testForm(addressRegex, inputAddress, errorAddress, message2);
+          testForm(nameRegex, inputCity, errorCity, message3);
+          testForm(emailRegex, inputEmail, errorEmail, message4);
+          if (order == 0) {
+            alert("attention!!! votre panier est vide");
+          } else {
+            if (value.orderId != undefined) {
+              window.location.href = `./confirmation.html?id=${value.orderId}`;
+              localStorage.removeItem("product");
+            }
+          }
+          console.log(order);
+          console.log(value);
+          console.log(value.orderId);
+        });
+    })
+    .catch((err) => {
+      console.log("Une erreur est survenue" + err);
+    });
 });
