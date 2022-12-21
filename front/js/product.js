@@ -11,7 +11,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
       .json()
 
       .then((value) => {
-        console.table(value);
+        console.log(value);
 
         // ***********************créations des éléments HTML***********************
         const conteneurImage2 = document.createElement("img");
@@ -60,23 +60,31 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
           // *************************function pour le local storage**************************
           function saveOrder(order) {
+            order.sort(function (a, b) {
+              return a.prix - b.prix;
+            });
             localStorage.setItem("product", JSON.stringify(order));
           }
 
           function getOrder() {
-            let order = localStorage.getItem("product");
-            if (order == null) {
+            let order = JSON.parse(localStorage.getItem("product"));
+            console.log(order);
+            if (order === null) {
               return [];
             } else {
-              return JSON.parse(order);
+              return order;
             }
           }
 
           function addOrder(produit) {
             let order = getOrder();
+            console.log(order);
             let foundProduct = order.find(
-              (p) => (p.id == produit.id) & (p.couleur == produit.couleur)
+              (p) =>
+                p.idProduit === produit.idProduit &&
+                p.couleur === produit.couleur
             );
+            console.log(foundProduct);
             if (foundProduct != undefined) {
               foundProduct.quantite += num;
             } else {
@@ -109,7 +117,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
           } else {
             // ******************************actions d'envoi******************************
             addOrder(produit);
-            // popupConfirmation();
+            popupConfirmation();
           }
         });
       });
