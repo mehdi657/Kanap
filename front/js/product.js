@@ -106,7 +106,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
               // window.location.href = "../html/index.html";
             }
           };
-          // console.log(popupConfirmation);
+          console.log(popupConfirmation);
 
           // ******************************verifications avant envoi******************************
           if (produit.couleur == "") {

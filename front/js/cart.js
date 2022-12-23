@@ -17,33 +17,69 @@ let elementCreer = {
 };
 
 // ***************declarations des fonctions*********************
+/**
+ * seletion d'element avec querySelector
+ * @param {string} nom1 nom du conteneur
+ * @param {string} nom2 id ou class
+ */
 function select(nom1, nom2) {
   const element = document.querySelector(nom2);
   window[nom1] = element;
 }
 
+/**
+ * seletions de plusieurs element avec querySelectorAll
+ * @param {string} nom1 nom du conteneur
+ * @param {string} nom2 id ou class
+ */
 function selectall(nom1, nom2) {
   const element = document.querySelectorAll(nom2);
   window[nom1] = element;
 }
 
+/**
+ * creation d'element avec creatElement
+ * @param {string} nom1 nom du conteneur
+ * @param {string} nom2 balise HTML
+ */
 function creat(nom1, nom2) {
   const element = document.createElement(nom2);
   window[nom1] = element;
 }
 
+/**
+ * ajouter une class a une balise
+ * @param {string} nom1 nom du conteneur
+ * @param {string} nom2 class a ajouter ex "class"
+ */
 function clas(nom1, nom2) {
   nom1.classList.add(nom2);
 }
 
+/**
+ * ajouter un atribut a une balise
+ * @param {string} nom1 nom du conteneur
+ * @param {string} nom2 l'atribut ex "alt"
+ * @param {string} nom3 valeur de l'atribut
+ */
 function attribu(nom1, nom2, nom3) {
   nom1.setAttribute(nom2, nom3);
 }
 
+/**
+ * ajouter du text dans une balise
+ * @param {string} nom1 nom du conteneur
+ * @param {string} nom2 text a ajouter
+ */
 function text(nom1, nom2) {
   nom1.textContent = nom2;
 }
 
+/**
+ * affilier un element a un autre
+ * @param {string} nom1 nom du conteneur parent
+ * @param {string} nom2 nom du conteneur enfant
+ */
 function appChild(nom1, nom2) {
   nom1.appendChild(nom2);
 }
@@ -121,6 +157,7 @@ if (order === null) {
         clas(window[cle], "cart__item");
         attribu(window[cle], "data-color", value.couleur);
         attribu(window[cle], "data-id", `${value.idProduit}`);
+        console.log(window[cle]);
       }
       if (cle === "conteneurBloc") {
         appChild(conteneurArticle, window[cle]);
