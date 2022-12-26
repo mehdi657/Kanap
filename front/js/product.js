@@ -53,7 +53,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
             nomProduit: value.name,
             couleur: colors.value,
             quantite: num,
-            prix: value.price / 10,
+            // prix: value.price / 10,
             altTxt: value.altTxt,
           };
           // console.log(produit);
@@ -61,7 +61,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
           // *************************function pour le local storage**************************
           function saveOrder(order) {
             order.sort(function (a, b) {
-              return a.prix - b.prix;
+              return a.nomProduit.localeCompare(b.nomProduit);
             });
             localStorage.setItem("product", JSON.stringify(order));
           }
@@ -78,7 +78,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
           function addOrder(produit) {
             let order = getOrder();
-            console.log(order);
+            // console.log(order);
             let foundProduct = order.find(
               (p) =>
                 p.idProduit === produit.idProduit &&
@@ -106,7 +106,7 @@ fetch(`http://localhost:3000/api/products/${id}`)
               // window.location.href = "../html/index.html";
             }
           };
-          console.log(popupConfirmation);
+          // console.log(popupConfirmation);
 
           // ******************************verifications avant envoi******************************
           if (produit.couleur == "") {
